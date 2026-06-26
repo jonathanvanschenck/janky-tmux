@@ -2,7 +2,8 @@
 A janky tmux configuration
 
 ## Setup
-Install tmux (probably just by apt, or whatever your package manager is -- we aren't power users here, so the vanilla install is fine).
+Install tmux -- we highly recommend >=3.3 to be fully featured. See below if your package manager is too far behind this
+(I'm looking at you Ubuntu!)
 
 Then install this repo:
 ```bash
@@ -34,4 +35,65 @@ Each install gets its own `local.conf` (gitignored) for machine-specific tweaks.
 Depending on your config, you might need to force nvim to detect truecolor, you can do this by adding the following to your `~/.bashrc`
 ```
 export COLORTERM=truecolor
+```
+
+
+## Installing tmux from source
+```
+# Deps
+sudo apt install -y \
+    build-essential \
+    pkg-config \
+    libevent-dev \
+    libncurses5-dev \
+    libncursesw5-dev \
+    bison \
+    byacc \
+    autoconf \
+    automake
+
+
+cd /tmp
+wget https://github.com/tmux/tmux/releases/download/3.5a/tmux-3.5a.tar.gz
+tar xzf tmux-3.5a.tar.gz
+cd tmux-3.5a
+
+./configure --prefix=/usr/local
+make -j$(nproc)
+sudo make install
+```
+
+Or for maximum isolation:
+```
+# Install build dependencies
+sudo apt install -y \
+    build-essential \
+    pkg-config \
+    libevent-dev \
+    libncurses5-dev \
+    libncursesw5-dev \
+    bison \
+    byacc \
+    autoconf \
+    automake
+
+# Build and install tmux 3.5a into this repo's directory
+cd /tmp
+wget https://github.com/tmux/tmux/releases/download/3.5a/tmux-3.5a.tar.gz
+tar xzf tmux-3.5a.tar.gz
+cd tmux-3.5a
+
+./configure --prefix="$HOME/.config/tmux-jvs/dist"
+make -j$(nproc)
+make install
+```
+
+Then modify your alias
+```
+tm() {
+    "$HOME/.config/tmux-jvs/dist/bin/tmux" \
+        -L jvs-server \
+        -f "$HOME/.config/tmux-jvs/tmux.conf" \
+        "$@"
+}
 ```
