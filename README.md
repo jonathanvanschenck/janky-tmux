@@ -28,3 +28,10 @@ tm() {
 ```
 
 Each install gets its own `local.conf` (gitignored) for machine-specific tweaks.
+
+
+## nvim in tmux
+Depending on your config, you might need to force nvim to detect truecolor, you can do this by adding the following to your `~/.bashrc`
+```
+export COLORTERM=truecolor
+```
