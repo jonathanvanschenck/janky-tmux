@@ -2,7 +2,7 @@
 A janky tmux configuration
 
 ## Setup
-Install tmux -- we highly recommend >=3.3 to be fully featured. See below if your package manager is too far behind this
+Install tmux -- **requires >=3.2** (uses `if -F` format conditions which didn't exist before 3.2). We recommend >=3.3 to be fully featured. See below if your package manager is too far behind this
 (I'm looking at you Ubuntu!)
 
 Then install this repo:
